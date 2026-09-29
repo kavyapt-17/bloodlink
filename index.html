@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BloodLink: find and register blood donors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#">
+    <svg width="22" height="28" viewBox="0 0 22 28" aria-hidden="true"><path d="M11 1C11 1 1 12.5 1 18a10 10 0 0 0 20 0C21 12.5 11 1 11 1Z" fill="currentColor"/></svg>
+    BloodLink
+  </a>
+  <nav role="tablist" aria-label="Sections">
+    <button role="tab" data-tab="find" aria-selected="true">Find donors</button>
+    <button role="tab" data-tab="register" aria-selected="false">Register</button>
+    <button role="tab" data-tab="all" aria-selected="false">All donors</button>
+  </nav>
+</header>
+
+<main>
+  <!-- FIND -->
+  <section id="view-find" class="view">
+    <h1>Find a donor in your city</h1>
+    <p class="lede">Donors who gave blood in the last 90 days are hidden automatically.</p>
+
+    <form id="search-form" novalidate>
+      <fieldset>
+        <legend>Blood group needed</legend>
+        <div class="tiles" id="tiles"></div>
+      </fieldset>
+      <div class="row">
+        <label class="field grow">City
+          <input id="s-city" type="text" placeholder="e.g. Coimbatore" autocomplete="off">
+        </label>
+        <button class="primary" type="submit">Search donors</button>
+      </div>
+      <p class="err" id="search-err" role="alert"></p>
+    </form>
+
+    <div id="results" aria-live="polite"></div>
+  </section>
+
+  <!-- REGISTER -->
+  <section id="view-register" class="view" hidden>
+    <h1>Register as a donor</h1>
+    <p class="lede">You can be found by anyone searching your blood group and city.</p>
+    <form id="reg-form" class="card" novalidate>
+      <label class="field">Full name
+        <input name="name" type="text" autocomplete="name">
+        <span class="err" data-for="name"></span>
+      </label>
+      <label class="field">Phone number
+        <input name="phone" type="tel" inputmode="numeric" maxlength="10" placeholder="10 digits" autocomplete="tel">
+        <span class="err" data-for="phone"></span>
+      </label>
+      <div class="row">
+        <label class="field grow">City
+          <input name="city" type="text" autocomplete="address-level2">
+          <span class="err" data-for="city"></span>
+        </label>
+        <label class="field">Blood group
+          <select name="bloodGroup"></select>
+          <span class="err" data-for="bloodGroup"></span>
+        </label>
+      </div>
+      <label class="field">Last donation date <small>(leave empty if you have never donated)</small>
+        <input name="lastDonationDate" type="date">
+        <span class="err" data-for="lastDonationDate"></span>
+      </label>
+      <p class="err" id="reg-err" role="alert"></p>
+      <button class="primary" type="submit">Register donor</button>
+    </form>
+  </section>
+
+  <!-- ALL -->
+  <section id="view-all" class="view" hidden>
+    <h1>All donors</h1>
+    <div class="row filters">
+      <label class="field grow">Filter by name or city
+        <input id="f-text" type="search" placeholder="Type to filter">
+      </label>
+      <label class="field">Status
+        <select id="f-status">
+          <option value="all">Everyone</option>
+          <option value="yes">Available</option>
+          <option value="no">Resting</option>
+        </select>
+      </label>
+    </div>
+    <div id="all-list" aria-live="polite"></div>
+  </section>
+</main>
+
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>
